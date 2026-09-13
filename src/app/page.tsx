@@ -1,32 +1,41 @@
+export const dynamic = "force-dynamic";
+
 import { Hero } from "@/components/home/Hero";
 import { ContentSection } from "@/components/media/ContentSection";
 import { Button } from "@/components/ui/Button";
 import {
-  popularMovies,
-  popularTvShows,
-  recommendedForYou,
-  trending,
-} from "@/data/placeholder-catalog";
+  getHeroMovie,
+  getPopularMovies,
+  getPopularTv,
+  getTopRatedMovies,
+  getTrendingMovies,
+  getTrendingTv,
+} from "@/lib/tmdb";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [heroMovie, trendingMovies, popularMovies, topRatedMovies, trendingTv, popularTv] =
+    await Promise.all([
+      getHeroMovie(),
+      getTrendingMovies(),
+      getPopularMovies(),
+      getTopRatedMovies(),
+      getTrendingTv(),
+      getPopularTv(),
+    ]);
+
   return (
     <>
-      <Hero />
+      <Hero item={heroMovie} />
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-4 py-12 sm:px-6 lg:px-8">
         <ContentSection
           id="discover"
-          title="Recommended For You"
-          description="A stand-in shelf. Personalized ranking arrives with the recommendation engine."
-          items={recommendedForYou}
-        />
-        <ContentSection
-          title="Trending"
-          description="What the UI treats as currently buzzing — still placeholder titles."
-          items={trending}
+          title="Trending Movies"
+          description="What people are watching this week."
+          items={trendingMovies}
         />
         <ContentSection
           title="Popular Movies"
-          description="Sample films used to prove out the grid, cards, and hover states."
+          description="The most-watched films right now."
           items={popularMovies}
           action={
             <Button href="/movies" variant="ghost" className="self-start">
@@ -35,9 +44,19 @@ export default function HomePage() {
           }
         />
         <ContentSection
+          title="Top Rated Movies"
+          description="Critically acclaimed films of all time."
+          items={topRatedMovies}
+        />
+        <ContentSection
+          title="Trending TV Shows"
+          description="Series gaining attention this week."
+          items={trendingTv}
+        />
+        <ContentSection
           title="Popular TV Shows"
-          description="Sample series for the same layout patterns as movies."
-          items={popularTvShows}
+          description="The most-watched series right now."
+          items={popularTv}
           action={
             <Button href="/tv" variant="ghost" className="self-start">
               View all
