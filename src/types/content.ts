@@ -20,4 +20,5 @@ export type HeroItem = {
   year: number;
   genres: string[];
   backdropPath: string | null;
+  posterPath: string | null;
 };

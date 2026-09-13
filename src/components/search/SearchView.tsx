@@ -51,8 +51,11 @@ export function SearchView() {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="font-display text-3xl text-foreground sm:text-4xl">Search</h1>
-      <p className="mt-2 max-w-2xl text-sm text-muted">
+      <div className="flex items-center gap-3">
+        <span className="h-7 w-1 rounded-full bg-accent" />
+        <h1 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">Search</h1>
+      </div>
+      <p className="mt-3 max-w-2xl text-sm text-muted">
         Search movies and TV shows from The Movie Database.
       </p>
       <form
@@ -68,7 +71,7 @@ export function SearchView() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search for a title..."
-          className="w-full rounded-full border border-line bg-surface px-5 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-accent"
+          className="w-full rounded-lg border border-line bg-surface px-5 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted focus:border-accent"
         />
       </form>
 

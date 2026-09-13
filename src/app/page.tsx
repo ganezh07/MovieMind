@@ -2,7 +2,6 @@ export const dynamic = "force-dynamic";
 
 import { Hero } from "@/components/home/Hero";
 import { ContentSection } from "@/components/media/ContentSection";
-import { Button } from "@/components/ui/Button";
 import {
   getHeroMovie,
   getPopularMovies,
@@ -26,7 +25,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero item={heroMovie} />
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 py-12 sm:px-6 lg:px-8">
         <ContentSection
           id="discover"
           title="Trending Movies"
@@ -37,11 +36,7 @@ export default async function HomePage() {
           title="Popular Movies"
           description="The most-watched films right now."
           items={popularMovies}
-          action={
-            <Button href="/movies" variant="ghost" className="self-start">
-              View all
-            </Button>
-          }
+          action={<SeeAllLink href="/movies" />}
         />
         <ContentSection
           title="Top Rated Movies"
@@ -57,13 +52,20 @@ export default async function HomePage() {
           title="Popular TV Shows"
           description="The most-watched series right now."
           items={popularTv}
-          action={
-            <Button href="/tv" variant="ghost" className="self-start">
-              View all
-            </Button>
-          }
+          action={<SeeAllLink href="/tv" />}
         />
       </div>
     </>
+  );
+}
+
+function SeeAllLink({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      className="shrink-0 text-sm font-semibold text-accent transition-colors hover:text-accent-strong"
+    >
+      See all
+    </a>
   );
 }

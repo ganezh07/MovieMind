@@ -202,6 +202,7 @@ export async function getHeroMovie(): Promise<HeroItem> {
     year: yearFromDate(detail.release_date),
     genres: detail.genres.map((g) => g.name),
     backdropPath: detail.backdrop_path,
+    posterPath: detail.poster_path,
   };
 }
 

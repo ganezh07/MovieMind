@@ -32,23 +32,19 @@ export function PosterArt({ item, className }: PosterArtProps) {
           src={imgSrc}
           alt=""
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none"
         />
       ) : (
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(160deg, #2a2a36 0%, #09090d 78%)",
+              "linear-gradient(160deg, #1e1e24 0%, #0a0a0c 78%)",
           }}
         />
       )}
-      <div className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_42%),linear-gradient(to_bottom,transparent,rgba(0,0,0,0.55))]" />
-      <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/30 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-foreground/90">
-        {item.mediaType === "tv" ? "Series" : "Film"}
-      </div>
       {!imgSrc ? (
-        <span className="absolute inset-0 flex items-center justify-center font-display text-5xl text-white/25">
+        <span className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white/20">
           {initials(item.title)}
         </span>
       ) : null}

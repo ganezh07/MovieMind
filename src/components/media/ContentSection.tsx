@@ -27,15 +27,18 @@ export function ContentSection({
   const isEmpty = !isLoading && items.length === 0;
 
   return (
-    <section id={id} className="scroll-mt-24">
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="font-display text-2xl tracking-wide text-foreground sm:text-3xl">
-            {title}
-          </h2>
-          {description ? (
-            <p className="mt-1 max-w-2xl text-sm text-muted">{description}</p>
-          ) : null}
+    <section id={id} className="scroll-mt-24" style={{ animation: "section-fade-in 0.5s ease-out both" }}>
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="h-6 w-1 rounded-full bg-accent" />
+          <div>
+            <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+              {title}
+            </h2>
+            {description ? (
+              <p className="mt-0.5 text-sm text-muted">{description}</p>
+            ) : null}
+          </div>
         </div>
         {action}
       </div>

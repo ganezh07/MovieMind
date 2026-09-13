@@ -10,7 +10,7 @@ export default function Error({
 }) {
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:px-6 lg:px-8">
-      <h2 className="font-display text-3xl text-foreground">
+      <h2 className="text-2xl font-extrabold tracking-tight text-foreground">
         Something went wrong
       </h2>
       <p className="mt-3 max-w-md text-sm leading-6 text-muted">
