@@ -28,6 +28,7 @@ export default async function HomePage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   let needsOnboarding = false;
+  let heroCtaHref = "#discover";
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -35,11 +36,14 @@ export default async function HomePage() {
       .eq("id", user.id)
       .maybeSingle();
     needsOnboarding = !profile?.onboarding_completed;
+    heroCtaHref = needsOnboarding ? "/onboarding" : "#discover";
+  } else {
+    heroCtaHref = "/login";
   }
 
   return (
     <>
-      <Hero item={heroMovie} />
+      <Hero item={heroMovie} ctaHref={heroCtaHref} />
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 py-12 sm:px-6 lg:px-8">
         {needsOnboarding ? <PersonalizePrompt /> : null}
         <ContentSection

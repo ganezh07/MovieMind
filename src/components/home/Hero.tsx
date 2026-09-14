@@ -4,9 +4,10 @@ import type { HeroItem } from "@/types/content";
 
 type HeroProps = {
   item: HeroItem;
+  ctaHref?: string;
 };
 
-export function Hero({ item }: HeroProps) {
+export function Hero({ item, ctaHref = "#discover" }: HeroProps) {
   const bg = backdropUrl(item.backdropPath, "original");
   const poster = posterUrl(item.posterPath, "w500");
 
@@ -56,7 +57,7 @@ export function Hero({ item }: HeroProps) {
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button href="#discover">Get Started</Button>
+              <Button href={ctaHref}>Get Started</Button>
               <Button href="/movies" variant="secondary">
                 Explore Movies
               </Button>
