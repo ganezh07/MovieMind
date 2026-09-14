@@ -39,7 +39,7 @@ function LoginForm() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
     });
@@ -50,7 +50,23 @@ function LoginForm() {
       return;
     }
 
-    router.push(redirect);
+    if (redirect && redirect !== "/") {
+      router.push(redirect);
+    } else if (data.user) {
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("onboarding_completed")
+        .eq("id", data.user.id)
+        .maybeSingle();
+
+      if (profileData && !profileData.onboarding_completed) {
+        router.push("/onboarding");
+      } else {
+        router.push("/");
+      }
+    } else {
+      router.push("/");
+    }
     router.refresh();
   };
 

@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  const protectedRoutes = ["/profile", "/watchlist"];
+  const protectedRoutes = ["/profile", "/watchlist", "/onboarding"];
   const authRoutes = ["/login", "/signup"];
   const isProtected = protectedRoutes.some((r) => pathname.startsWith(r));
   const isAuthRoute = authRoutes.some((r) => pathname === r);
@@ -50,6 +50,18 @@ export async function updateSession(request: NextRequest) {
 
   if (user && isAuthRoute) {
     return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (user && pathname === "/onboarding") {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("onboarding_completed")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profile?.onboarding_completed) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 
   return response;

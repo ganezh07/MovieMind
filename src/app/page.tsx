@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { Hero } from "@/components/home/Hero";
 import { ContentSection } from "@/components/media/ContentSection";
+import { PersonalizePrompt } from "@/components/home/PersonalizePrompt";
 import {
   getHeroMovie,
   getPopularMovies,
@@ -10,6 +11,7 @@ import {
   getTrendingMovies,
   getTrendingTv,
 } from "@/lib/tmdb";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function HomePage() {
   const [heroMovie, trendingMovies, popularMovies, topRatedMovies, trendingTv, popularTv] =
@@ -22,10 +24,24 @@ export default async function HomePage() {
       getPopularTv(),
     ]);
 
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let needsOnboarding = false;
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("onboarding_completed")
+      .eq("id", user.id)
+      .maybeSingle();
+    needsOnboarding = !profile?.onboarding_completed;
+  }
+
   return (
     <>
       <Hero item={heroMovie} />
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 py-12 sm:px-6 lg:px-8">
+        {needsOnboarding ? <PersonalizePrompt /> : null}
         <ContentSection
           id="discover"
           title="Trending Movies"
